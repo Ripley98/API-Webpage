@@ -32,8 +32,9 @@ def config_template(Partitionid, Accountid, headers, usernames, passwords, sipPo
             logging.debug("Configure Template:" + str(l))
             #print("3:")
             #print(l)
-            if l["message"] == 'Unauthorized':
-                logout()
+            if line.status_code == 404:
+                if l["message"] == 'Unauthorized':
+                    logout()
             if line.status_code == 404:
                 pass
             else:
@@ -99,8 +100,9 @@ def create_device(Partitionid, Accountid, headers, mac, sipPort):
             logging.debug("Configure Device Users:" + str(u))
             if u == []:
                 error.append("No Users on Account")
-            if u["message"] == 'Unauthorized':
-                logout()
+            if userID.status_code == 404:
+                if u["message"] == 'Unauthorized':
+                    logout()
             #print("1:")
             #print(u)
             #print(userID)
@@ -163,8 +165,9 @@ def create_device(Partitionid, Accountid, headers, mac, sipPort):
                             #print(newDevice)
                             n = json.loads(newDevice.text)
                             logging.debug("Create Device:" + str(n))
-                            if n["message"] == 'Unauthorized':
-                                logout()
+                            if newDevice.status_code == 404:
+                                if n["message"] == 'Unauthorized':
+                                    logout()
                             #print(n)
                             if newDevice.status_code == 400:
                                 if n['messages'] == ['InvalidMacAddress']:
@@ -217,8 +220,9 @@ def search_account(Partitionid,headers,error,Accountid):
         search = requests.get("https://api.alianza.com/v2/partition/" + prt + "/account/search?q=" + q,headers=headers)
         actInfo = json.loads(search.text)
         logging.debug("Default search:" + str(actInfo))
-        if q["message"] == 'Unauthorized':
-            logout()
+        if search.status_code == 404:
+            if actInfo["message"] == 'Unauthorized':
+                logout()
         #print(actInfo)
         for x in actInfo:
             # Accountid = {"faDoXhjKSJmj3-wwcmQfdA"}             # av technology
@@ -346,8 +350,9 @@ def callhistory():
                                       headers=headers)
                 actInfo = json.loads(search.text)
                 logging.debug("Call History Search:" + str(actInfo))
-                if actInfo["message"] == 'Unauthorized':
-                    logout()
+                if search.status_code == 404:
+                    if actInfo["message"] == 'Unauthorized':
+                        logout()
 
                 #print(actInfo)
 
@@ -373,15 +378,17 @@ def callhistory():
             partition = requests.get("https://api.alianza.com/v2/partition/" + prt, headers=headers)
             p = json.loads(partition.text)
             logging.debug("Call History Partition Name:" + str(p))
-            if p["message"] == 'Unauthorized':
-                logout()
+            if partition.status_code == 404:
+                if p["message"] == 'Unauthorized':
+                    logout()
             #print("Partition: " + p["name"])
             for act in Accountid:
                 account = requests.get("https://api.alianza.com/v2/partition/" + prt + "/account/" + act, headers=headers)
                 a = json.loads(account.text)
                 logging.debug("Call History Account Name:" + str(a))
-                if a["message"] == 'Unauthorized':
-                    logout()
+                if account.status_code == 404:
+                    if a["message"] == 'Unauthorized':
+                        logout()
                 if account.status_code == 404:
                     pass
                 else:
@@ -392,8 +399,9 @@ def callhistory():
                         headers=headers)
                     h = json.loads(history.text)
                     logging.debug("Call History:" + str(h))
-                    if h["message"] == 'Unauthorized':
-                        logout()
+                    if history.status_code == 404:
+                        if h["message"] == 'Unauthorized':
+                            logout()
                     #print(h)
                     totalRecords.append(h["totalRecords"])
                     if h["totalRecords"] == 0:
@@ -469,8 +477,9 @@ def registered():
                 #print(search)
                 actInfo = json.loads(search.text)
                 logging.debug("Registered Account Search:" + str(actInfo))
-                if actInfo["message"] == 'Unauthorized':
-                    logout()
+                if search.status_code == 404:
+                    if actInfo["message"] == 'Unauthorized':
+                        logout()
                 #print(actInfo)
 
                 for x in actInfo:
@@ -488,15 +497,17 @@ def registered():
             partition = requests.get("https://api.alianza.com/v2/partition/" + prt, headers=headers)
             p = json.loads(partition.text)
             logging.debug("Registered Partition Name:" + str(p))
-            if p["message"] == 'Unauthorized':
-                logout()
+            if partition.status_code == 404:
+                if p["message"] == 'Unauthorized':
+                    logout()
             partitionName.append(p["name"])
             for act in Accountid:
                 account = requests.get("https://api.alianza.com/v2/partition/" + prt + "/account/" + act, headers=headers)
                 a = json.loads(account.text)
                 logging.debug("Registered Account Name:" + str(a))
-                if a["message"] == 'Unauthorized':
-                    logout()
+                if account.status_code == 404:
+                    if a["message"] == 'Unauthorized':
+                        logout()
                 #print(a)
                 if account.status_code == 404:
                     pass
@@ -507,8 +518,9 @@ def registered():
                         headers=headers)
                     y = json.loads(BusinessLines.text)
                     logging.debug("Device Lines:" + str(y))
-                    if y["message"] == 'Unauthorized':
-                        logout()
+                    if BusinessLines.status_code == 404:
+                        if y["message"] == 'Unauthorized':
+                            logout()
                     actNum = actNum + 1
                     for line in y:
                         #print(line)
@@ -520,8 +532,9 @@ def registered():
                             headers=headers)
                         z = json.loads(registered.text)
                         logging.debug("Line is Registered:" + str(z))
-                        if z["message"] == 'Unauthorized':
-                            logout()
+                        if registered.status_code == 404:
+                            if z["message"] == 'Unauthorized':
+                                logout()
                         # True/False if line is registered
                         if z["registered"] == True:
                             regStatus.append("Registered")

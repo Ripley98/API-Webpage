@@ -3506,3 +3506,27 @@ TypeError: string indices must be integers
 2022-08-23 12:07:54,111 127.0.0.1 - - [23/Aug/2022 12:07:54] "GET /registrationstatus HTTP/1.1" 200 -
 2022-08-23 12:07:54,183 127.0.0.1 - - [23/Aug/2022 12:07:54] "[36mGET /static/css/bttn.css HTTP/1.1[0m" 304 -
 2022-08-23 12:07:54,308 127.0.0.1 - - [23/Aug/2022 12:07:54] "GET /favicon.ico HTTP/1.1" 200 -
+2022-08-23 13:47:53,814 127.0.0.1 - - [23/Aug/2022 13:47:53] "GET /adddevice HTTP/1.1" 200 -
+2022-08-23 13:47:53,874 127.0.0.1 - - [23/Aug/2022 13:47:53] "[36mGET /static/css/bttn.css HTTP/1.1[0m" 304 -
+2022-08-23 13:47:53,936 127.0.0.1 - - [23/Aug/2022 13:47:53] "GET /favicon.ico HTTP/1.1" 200 -
+2022-08-23 13:47:59,064 Starting new HTTPS connection (1): api.alianza.com:443
+2022-08-23 13:47:59,650 https://api.alianza.com:443 "GET /v2/partition/kT8A3FFXSQuWCbxs58Iiug/account/search?q=10664 HTTP/1.1" 200 223
+2022-08-23 13:47:59,652 Default search:[{'partitionId': 'Q8MUf4fWRkuckIhWMcUg1w', 'id': 'AUDpuUx9TRe7kM7NylCB6A', 'accountNumber': '5QGGRMQBB-LWF-MWORV-10664', 'accountName': 'Whole Foods Market - MW ORV 10664', 'type': 'ADVANCED', 'accountStatus': 'ACTIVE', 'platformType': 'CPE2', 'matches': {}}]
+2022-08-23 13:47:59,653 Exception on /adddevice [GET]
+Traceback (most recent call last):
+  File "C:\Users\Riley\PycharmProjects\AlianzaWebpage\venv\lib\site-packages\flask\app.py", line 2077, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\Riley\PycharmProjects\AlianzaWebpage\venv\lib\site-packages\flask\app.py", line 1525, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\Riley\PycharmProjects\AlianzaWebpage\venv\lib\site-packages\flask\app.py", line 1523, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\Riley\PycharmProjects\AlianzaWebpage\venv\lib\site-packages\flask\app.py", line 1509, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "C:/Users/Riley/PycharmProjects/AlianzaWebpage/venv/Build/WebServer.py", line 259, in adddevice
+    error, q, Accountid = search_account(Partitionid, headers, error, Accountid)
+  File "C:/Users/Riley/PycharmProjects/AlianzaWebpage/venv/Build/WebServer.py", line 220, in search_account
+    if q["message"] == 'Unauthorized':
+TypeError: string indices must be integers
+2022-08-23 13:47:59,672 127.0.0.1 - - [23/Aug/2022 13:47:59] "[35m[1mGET /adddevice?q=10664 HTTP/1.1[0m" 500 -
+2022-08-23 13:47:59,917 127.0.0.1 - - [23/Aug/2022 13:47:59] "GET /favicon.ico HTTP/1.1" 200 -
+2022-08-23 13:55:14,322  * Running on http://127.0.0.1:5000 (Press CTRL+C to quit)

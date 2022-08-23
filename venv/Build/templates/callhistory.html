@@ -1,0 +1,59 @@
+<html>
+  <head>
+    <title>Albion API Portal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ url_for('static', filename='css/bttn.css') }}" rel="stylesheet" media="screen">
+  </head>
+</html>
+<div class="header">
+  <h1>Alianza API Portal</h1>
+</div>
+<div class="sidenav">
+  <a href="/registrationstatus">Registration Status</a>
+  <a href="/callhistory">Call History</a>
+  <a href="/adddevice">Add Device</a>
+  <a href="/logs">Download Log</a>
+  <a href="/logout">Log out</a>
+</div>
+<main>
+    <section class="sec-boxes" role="section">
+      <form id="form">
+  <input type="search" id="query" name="q" placeholder="Search for Account Call History">
+  <button>Search</button>
+</form>
+      {% if totact != 0 %}
+      {%for x in range(0, totAct)%}
+      <adrticle class="box">
+        <h1>{{accountName[x]}}</h1>
+        <h2>{{totalRecords[x]}} Calls in the last 10 days</h2>
+        <table style="margin-left: 20px;">
+          <th>
+            <tr style="color: black; ">
+              <td>origNumber</td>
+              <td>termNumber</td>
+              <td>startTime</td>
+              <td>actualCallLengthSeconds</td>
+            </tr>
+          </th>
+        {%for i in range(0, len)%}
+          <tr>
+            {% if actID[i] == x + 1 %}
+              <td>{{origNumber[i]}}</td>
+              <td>{{termNumber[i]}}</td>
+              <td>{{startTime[i]}}</td>
+              <td>{{actualCallLengthSeconds[i]}}</td>
+            {% endif %}
+        {%endfor%}
+          </tr>
+        </table>
+      </adrticle>
+      {%endfor%}
+      {% endif %}
+    </section>
+</main>
+<footer>
+  <nav role="navigation">
+  </nav>
+  <p class="copy">&copy; Albion Ventures LLC</p>
+</footer>
+<div class="line"></div>

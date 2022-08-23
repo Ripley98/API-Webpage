@@ -1,0 +1,59 @@
+<html>
+  <head>
+    <title>Albion API Portal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ url_for('static', filename='css/bttn.css') }}" rel="stylesheet" media="screen">
+  </head>
+</html>
+<div class="header">
+  <h1>Alianza API Portal</h1>
+</div>
+<div class="sidenav">
+  <a href="/registrationstatus">Registration Status</a>
+  <a href="/callhistory">Call History</a>
+  <a href="/adddevice">Add Device</a>
+    <a href="/logs">Download Log</a>
+    <a href="/logout">Log out</a>
+</div>
+<main>
+    <section class="sec-boxes" role="section">
+        {% if step == 1 %}
+      <form id="form">
+            <input type="search" id="query" name="q" placeholder="Search for Account to Add Device">
+            <button>Search</button>
+      </form>
+        {% endif %}
+
+        {% if step == 2 %}
+        <form id="form">
+            <input type="search" id="query" name="port" placeholder="What port device:">
+            <button>Enter</button>
+      </form>
+        <h1>{{accountName[0]}}</h1>
+        {% endif %}
+
+        {% if step == 3 %}
+        <form id="form">
+            <input type="search" id="query" name="mac" placeholder="Enter Mac adress of device">
+            <button>Enter</button>
+      </form>
+        <h1>{{accountName[0]}}</h1>
+        <h2>{{sipPort}}</h2>
+        {% endif %}
+
+        {% if step == 4 %}
+        <h1>Successfully created file {{newFileName}}</h1>
+        <a href="{{ url_for('newFileName') }}">File</a>
+        {% endif %}
+
+        {% if error %}
+        <p class="error"><strong>Error:</strong> {{ error }}
+      {% endif %}
+    </section>
+</main>
+<footer>
+  <nav role="navigation">
+  </nav>
+  <p class="copy">&copy; Albion Ventures LLC</p>
+</footer>
+<div class="line"></div>

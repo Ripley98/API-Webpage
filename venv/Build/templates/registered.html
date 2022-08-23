@@ -1,0 +1,56 @@
+<html>
+  <head>
+    <title>Albion API Portal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ url_for('static', filename='css/bttn.css') }}" rel="stylesheet" media="screen">
+  </head>
+</html>
+<div class="header">
+  <h1>Alianza API Portal</h1>
+</div>
+<div class="sidenav">
+  <a href="/registrationstatus">Registration Status</a>
+  <a href="/callhistory">Call History</a>
+  <a href="/adddevice">Add Device</a>
+  <a href="/logs">Download Log</a>
+  <a href="/logout">Log out</a>
+</div>
+<main>
+    <section class="sec-boxes" role="section">
+      <form id="form">
+  <input type="search" id="query" name="q" placeholder="Search for Account Reg Status">
+  <button>Search</button>
+</form>
+      {% if totact != 0 %}
+      {%for x in range(0, totAct)%}
+      <adrticle class="box">
+        <h1>{{accountName[x]}}</h1>
+        <table style="margin-left: 20px;">
+          <th>
+            <tr style="color: black; ">
+              <td>Line Name</td>
+              <td>Phone Number</td>
+              <td>Registration Status</td>
+            </tr>
+          </th>
+        {%for i in range(0, len)%}
+          <tr>
+            {% if actID[i] == x + 1 %}
+              <td>{{lineName[i]}}</td>
+              <td>{{Phonenumber[i]}}</td>
+              <td>{{regStatus[i]}}</td>
+            {% endif %}
+        {%endfor%}
+          </tr>
+        </table>
+      </adrticle>
+      {%endfor%}
+      {% endif %}
+    </section>
+</main>
+<footer>
+  <nav role="navigation">
+  </nav>
+  <p class="copy">&copy; Albion Ventures LLC</p>
+</footer>
+<div class="line"></div>

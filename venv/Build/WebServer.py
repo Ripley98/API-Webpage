@@ -32,12 +32,9 @@ def config_template(Partitionid, Accountid, headers, usernames, passwords, sipPo
             logging.debug("Configure Template:" + str(l))
             #print("3:")
             #print(l)
-            if line.status_code == 404:
-                message = []
-                for x in l:
-                    message.append(x['message'])
-                    if message[0] == 'Unauthorized':
-                        logout()
+            if line.status_code == 401:
+                if l["message"] == 'Unauthorized' or l["messages"] == 'ExpiredAuthToken':
+                    return redirect(url_for('logout'))
             if line.status_code == 404:
                 pass
             else:
@@ -108,12 +105,9 @@ def create_device(Partitionid, Accountid, headers, mac, sipPort):
                 cID = callerID["callerIdNumber"]
                 if cID == '':
                     error.append("Caller ID Not Assigned")
-            if userID.status_code == 404:
-                message = []
-                for x in u:
-                    message.append(x['message'])
-                    if message[0] == 'Unauthorized':
-                        logout()
+            if userID.status_code == 401:
+                if u["message"] == 'Unauthorized' or u["messages"] == 'ExpiredAuthToken':
+                    return redirect(url_for('logout'))
             #print("1:")
             #print(u)
             #print(userID)
@@ -176,12 +170,9 @@ def create_device(Partitionid, Accountid, headers, mac, sipPort):
                             #print(newDevice)
                             n = json.loads(newDevice.text)
                             logging.debug("Create Device:" + str(n))
-                            if newDevice.status_code == 404:
-                                message = []
-                                for x in n:
-                                    message.append(x['message'])
-                                    if message[0] == 'Unauthorized':
-                                        logout()
+                            if newDevice.status_code == 401:
+                                if n["message"] == 'Unauthorized' or n["messages"] == 'ExpiredAuthToken':
+                                    return redirect(url_for('logout'))
                             #print(n)
                             if newDevice.status_code == 400:
                                 if n['messages'] == ['InvalidMacAddress']:
@@ -234,12 +225,9 @@ def search_account(Partitionid,headers,error,Accountid):
         search = requests.get("https://api.alianza.com/v2/partition/" + prt + "/account/search?q=" + q,headers=headers)
         actInfo = json.loads(search.text)
         logging.debug("Default search:" + str(actInfo))
-        if search.status_code == 404:
-            message = []
-            for x in actInfo:
-                message.append(x['message'])
-                if message[0] == 'Unauthorized':
-                    logout()
+        if search.status_code == 401:
+            if actInfo["message"] == 'Unauthorized' or actInfo["messages"] == 'ExpiredAuthToken':
+                return redirect(url_for('logout'))
         #print(actInfo)
         for x in actInfo:
             # Accountid = {"faDoXhjKSJmj3-wwcmQfdA"}             # av technology
@@ -367,12 +355,9 @@ def callhistory():
                                       headers=headers)
                 actInfo = json.loads(search.text)
                 logging.debug("Call History Search:" + str(actInfo))
-                if search.status_code == 404:
-                    message = []
-                    for x in actInfo:
-                        message.append(x['message'])
-                        if message[0] == 'Unauthorized':
-                            logout()
+                if search.status_code == 401:
+                    if actInfo["message"] == 'Unauthorized' or actInfo["messages"] == 'ExpiredAuthToken':
+                        return redirect(url_for('logout'))
 
                 #print(actInfo)
 
@@ -398,23 +383,17 @@ def callhistory():
             partition = requests.get("https://api.alianza.com/v2/partition/" + prt, headers=headers)
             p = json.loads(partition.text)
             logging.debug("Call History Partition Name:" + str(p))
-            if partition.status_code == 404:
-                message = []
-                for x in p:
-                    message.append(x['message'])
-                    if message[0] == 'Unauthorized':
-                        logout()
+            if partition.status_code == 401:
+                if p["message"] == 'Unauthorized' or p["messages"] == 'ExpiredAuthToken':
+                    return redirect(url_for('logout'))
             #print("Partition: " + p["name"])
             for act in Accountid:
                 account = requests.get("https://api.alianza.com/v2/partition/" + prt + "/account/" + act, headers=headers)
                 a = json.loads(account.text)
                 logging.debug("Call History Account Name:" + str(a))
-                if account.status_code == 404:
-                    message = []
-                    for x in a:
-                        message.append(x['message'])
-                        if message[0] == 'Unauthorized':
-                            logout()
+                if account.status_code == 401:
+                    if a["message"] == 'Unauthorized' or a["messages"] == 'ExpiredAuthToken':
+                        return redirect(url_for('logout'))
                 if account.status_code == 404:
                     pass
                 else:
@@ -425,12 +404,9 @@ def callhistory():
                         headers=headers)
                     h = json.loads(history.text)
                     logging.debug("Call History:" + str(h))
-                    if history.status_code == 404:
-                        message = []
-                        for x in h:
-                            message.append(x['message'])
-                            if message[0] == 'Unauthorized':
-                                logout()
+                    if history.status_code == 401:
+                        if h["message"] == 'Unauthorized' or h["messages"] == 'ExpiredAuthToken':
+                            return redirect(url_for('logout'))
                     #print(h)
                     totalRecords.append(h["totalRecords"])
                     if h["totalRecords"] == 0:
@@ -506,12 +482,9 @@ def registered():
                 #print(search)
                 actInfo = json.loads(search.text)
                 logging.debug("Registered Account Search:" + str(actInfo))
-                if search.status_code == 404:
-                    message = []
-                    for x in actInfo:
-                        message.append(x['message'])
-                        if message[0] == 'Unauthorized':
-                            logout()
+                if search.status_code == 401:
+                    if actInfo["message"] == 'Unauthorized' or actInfo["messages"] == 'ExpiredAuthToken':
+                        return redirect(url_for('logout'))
                 #print(actInfo)
 
                 for x in actInfo:
@@ -529,23 +502,17 @@ def registered():
             partition = requests.get("https://api.alianza.com/v2/partition/" + prt, headers=headers)
             p = json.loads(partition.text)
             logging.debug("Registered Partition Name:" + str(p))
-            if partition.status_code == 404:
-                message = []
-                for x in p:
-                    message.append(x['message'])
-                    if message[0] == 'Unauthorized':
-                        logout()
+            if partition.status_code == 401:
+                if p["message"] == 'Unauthorized' or p["messages"] == 'ExpiredAuthToken':
+                    return redirect(url_for('logout'))
             partitionName.append(p["name"])
             for act in Accountid:
                 account = requests.get("https://api.alianza.com/v2/partition/" + prt + "/account/" + act, headers=headers)
                 a = json.loads(account.text)
                 logging.debug("Registered Account Name:" + str(a))
-                if account.status_code == 404:
-                    message = []
-                    for x in a:
-                        message.append(x['message'])
-                        if message[0] == 'Unauthorized':
-                            logout()
+                if account.status_code == 401:
+                    if a["message"] == 'Unauthorized' or a["messages"] == 'ExpiredAuthToken':
+                        return redirect(url_for('logout'))
                 #print(a)
                 if account.status_code == 404:
                     pass
@@ -556,12 +523,9 @@ def registered():
                         headers=headers)
                     y = json.loads(BusinessLines.text)
                     logging.debug("Device Lines:" + str(y))
-                    if BusinessLines.status_code == 404:
-                        message = []
-                        for x in y:
-                            message.append(x['message'])
-                            if message[0] == 'Unauthorized':
-                                logout()
+                    if BusinessLines.status_code == 401:
+                        if y["message"] == 'Unauthorized' or y["messages"] == 'ExpiredAuthToken':
+                            return redirect(url_for('logout'))
                     actNum = actNum + 1
                     for line in y:
                         #print(line)
@@ -573,12 +537,9 @@ def registered():
                             headers=headers)
                         z = json.loads(registered.text)
                         logging.debug("Line is Registered:" + str(z))
-                        if registered.status_code == 404:
-                            message = []
-                            for x in z:
-                                message.append(x['message'])
-                                if message[0] == 'Unauthorized':
-                                    logout()
+                        if registered.status_code == 401:
+                            if z["message"] == 'Unauthorized' or z["messages"] == 'ExpiredAuthToken':
+                                return redirect(url_for('logout'))
                         # True/False if line is registered
                         if z["registered"] == True:
                             regStatus.append("Registered")

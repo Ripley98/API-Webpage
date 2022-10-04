@@ -41,9 +41,9 @@ def config_template(Partitionid, Accountid, headers, usernames, passwords, sipPo
                 if sipPort == 'SIP_4_Port_MTA':
                     origninal = r'config\orig_config\VEGA_4P_TEMPLATE_CONFIG_JAN2022vF1.txt'
                 elif sipPort == 'SIP_8_Port_MTA':
-                    origninal = r'config\orig_config\VEGA_8P_AV_TEMPLATE_CONFIG_MAR2022vF1.txt'
+                    origninal = r'config\orig_config\VEGA_8P_AV_DISABLED_USERS_TEMPLATE_CONFIG_SEP2022vF1.txt'
                 elif sipPort == 'SIP_24_Port_MTA':
-                    origninal = r'config\orig_config\24PORT-VEGA3000G-config-08232022-USA-AV-TEMPLATE (1).txt'
+                    origninal = r'config\orig_config\24PORT-VEGA3000G-config-05032022-USA-AV-TEMPLATE.txt'
 
                 newFileName = r'config\new_config\VEGA_'+sipPort+'_'+l["accountNumber"]+".txt"
                 shutil.copyfile(origninal,newFileName)
@@ -57,10 +57,14 @@ def config_template(Partitionid, Accountid, headers, usernames, passwords, sipPo
                             if sipPort == 'SIP_24_Port_MTA':
                                 if countUsr < 10:
                                     data = data.replace("SIP_USERNAME_LINE0"+str(countUsr), user)
+                                    data = data.replace('.sip.reg.user.' + str(countUsr) + '.enable="0"','.sip.reg.user.' + str(countUsr) + '.enable="1"')
                                 else:
                                     data = data.replace("SIP_USERNAME_LINE" + str(countUsr), user)
+                                    data = data.replace('.sip.reg.user.' + str(countUsr) + '.enable="0"','.sip.reg.user.' + str(countUsr) + '.enable="1"')
                             else:
                                 data = data.replace("SIP_USERNAME_LINE" + str(countUsr), user)
+                                data = data.replace('.sip.reg.user.' + str(countUsr) + '.enable="0"','.sip.reg.user.' + str(countUsr) + '.enable="1"')
+
 
                         with open(newFileName, 'w') as file:
                             file.write(data)
@@ -73,10 +77,13 @@ def config_template(Partitionid, Accountid, headers, usernames, passwords, sipPo
                         if sipPort == 'SIP_24_Port_MTA':
                             if countPwd < 10:
                                 data = data.replace("SIP_PASSWORD_LINE0" + str(countPwd), pwd)
+                                data = data.replace('.sip.auth.user.' + str(countPwd) + '.enable="0"','.sip.auth.user.' + str(countPwd) + '.enable="1"')
                             else:
                                 data = data.replace("SIP_PASSWORD_LINE" + str(countPwd), pwd)
+                                data = data.replace('.sip.auth.user.' + str(countPwd) + '.enable="0"','.sip.auth.user.' + str(countPwd) + '.enable="1"')
                         else:
                             data = data.replace("SIP_PASSWORD_LINE" + str(countPwd), pwd)
+                            data = data.replace('.sip.auth.user.'+str(countPwd)+'.enable="0"','.sip.auth.user.'+str(countPwd)+'.enable="1"')
 
                     with open(newFileName, 'w') as file:
                         file.write(data)

@@ -1,22 +1,15 @@
-## Alianza specific TEMPLATE for FXS PORT Mode and 8 Ports.
-## Changes required 
-## change each <<SIP_USERNAME_LINE1>> for each line 1-8 count of 11 times
-## change each <<SIP_PASSWORD_LINE1>> for each line 1-8 count of 2 times
-##
-## SBC = sbcrtp.p2.alianza.com  
-##
 ;writing file ...
 ;PUT completed
 ;
 ; Script generated using
-; PUT MEM:0xB6754008;length=0x00040000,buffer=0xB6754008
+; PUT MEM:0xB6366008;length=0x00040000,buffer=0xB6366008
  ;<all>
-; CONFIGVERSION:AVVEGA:01/01/1970 00:03:58
+; CONFIGVERSION:AVVEGA:10/04/2022 16:47:22
 ;
  set ._advanced.auto_apply="0"
  set ._advanced.blocking_cause="34"
  set ._advanced.boot_debug="0"
- set ._advanced.cfg_counter="111"
+ set ._advanced.cfg_counter="132"
  set ._advanced.cust_banner="Albion Ventures LLC"
  set ._advanced.oem_banner="0"
  set ._advanced.oem_banner_name="voip_gateway.gif"
@@ -542,6 +535,7 @@
    set ._advanced.sip.sdp.maxptime_enable="0"
    set ._advanced.sip.sdp.nat_enable="1"
    set ._advanced.sip.sdp.optimise_dsp_threshold="100"
+   set ._advanced.sip.sdp.prot_discriminator="1"
    set ._advanced.sip.sdp.ptime_mode="0"
    set ._advanced.sip.sdp.sess_desc_connection="1"
    set ._advanced.sip.sdp.silencesupp_enable="0"
@@ -555,6 +549,7 @@
    set ._advanced.sip.subscribe.expires_max="360"
    set ._advanced.sip.tcp.cleanup_old_sockets="0"
    set ._advanced.sip.tcp.enable="1"
+   set ._advanced.sip.tcp.use_existing_tcp_sockets="0"
    set ._advanced.sip.trace.custom_port="5060-5065"
    set ._advanced.sip.trace.enable="Enable"
    set ._advanced.sip.trace.interface="all"
@@ -609,12 +604,12 @@
  cp .dns.2
   set .dns.2.ip="8.8.8.8"
  cp .dns.3
-  set .dns.3.ip="192.168.16.1"
+  set .dns.3.ip="192.10.1.1"
  set .ftp.abort_before_close="0"
  set .ftp.anonymous_login="1"
- set .ftp.dhcp_if="1"
+ set .ftp.dhcp_if="0"
  set .ftp.enable_size="1"
- set .ftp.ip="0.0.0.0"
+ set .ftp.ip="192.168.50.144"
  set .ftp.lan_profile="1"
  set .ftp.ping_test="0"
  set .ftp.port="21"
@@ -634,20 +629,20 @@
  set .https.port="443"
  set .lan.file_transfer_method="TFTP"
  set .lan.name="AVVEGA"
-  set .lan.gateway.dhcp_if="0"
-  set .lan.gateway.ip="192.168.16.1"
+  set .lan.gateway.dhcp_if="1"
+  set .lan.gateway.ip="192.10.1.1"
   purge .lan.if
   cp .lan.if.1
-   set .lan.if.1.ip="192.168.16.50"
+   set .lan.if.1.ip="192.10.1.226"
    set .lan.if.1.max_tx_rate="0"
    set .lan.if.1.protocol="ip"
    set .lan.if.1.subnet="255.255.255.0"
    set .lan.if.1.use_apipa="1"
-   set .lan.if.1.use_dhcp="0"
+   set .lan.if.1.use_dhcp="1"
     set .lan.if.1.dhcp.get_dns="1"
     set .lan.if.1.dhcp.get_dns_suffix="1"
-    set .lan.if.1.dhcp.get_ftp="1"
-    set .lan.if.1.dhcp.get_gateway="0"
+    set .lan.if.1.dhcp.get_ftp="0"
+    set .lan.if.1.dhcp.get_gateway="1"
     set .lan.if.1.dhcp.get_http="1"
     set .lan.if.1.dhcp.get_ntp="1"
     set .lan.if.1.dhcp.get_tftp="1"
@@ -804,7 +799,7 @@
    set .media.cap.7.pkt_profile="2"
   cp .media.cap.8
    set .media.cap.8.codec="g711Ulaw64k"
-   set .media.cap.8.packet_time="20"
+   set .media.cap.8.packet_time="30"
    set .media.cap.8.pkt_profile="2"
   purge .media.capset
   cp .media.capset.1
@@ -884,6 +879,7 @@
   purge .media.tdm_profile
   cp .media.tdm_profile.1
    set .media.tdm_profile.1.comfort_noise="off"
+   set .media.tdm_profile.1.dtmf_filter="enable"
    set .media.tdm_profile.1.echo_af_mode="disable"
    set .media.tdm_profile.1.echo_erl_db="6"
    set .media.tdm_profile.1.echo_nlp_mode="disable"
@@ -1569,56 +1565,56 @@
  set .sip.t38_annexE_accept="0"
    purge .sip.auth.user
    cp .sip.auth.user.1
-    set .sip.auth.user.1.enable="1"
+    set .sip.auth.user.1.enable="0"
     set .sip.auth.user.1.password="SIP_PASSWORD_LINE1"
     set .sip.auth.user.1.resource_priority="routine"
     set .sip.auth.user.1.sip_profile="1"
     set .sip.auth.user.1.subscriber="IF:0101"
     set .sip.auth.user.1.username="SIP_USERNAME_LINE1"
    cp .sip.auth.user.2
-    set .sip.auth.user.2.enable="1"
+    set .sip.auth.user.2.enable="0"
     set .sip.auth.user.2.password="SIP_PASSWORD_LINE2"
     set .sip.auth.user.2.resource_priority="routine"
     set .sip.auth.user.2.sip_profile="1"
     set .sip.auth.user.2.subscriber="IF:0102"
     set .sip.auth.user.2.username="SIP_USERNAME_LINE2"
    cp .sip.auth.user.3
-    set .sip.auth.user.3.enable="1"
+    set .sip.auth.user.3.enable="0"
     set .sip.auth.user.3.password="SIP_PASSWORD_LINE3"
     set .sip.auth.user.3.resource_priority="routine"
     set .sip.auth.user.3.sip_profile="1"
     set .sip.auth.user.3.subscriber="IF:0103"
     set .sip.auth.user.3.username="SIP_USERNAME_LINE3"
    cp .sip.auth.user.4
-    set .sip.auth.user.4.enable="1"
+    set .sip.auth.user.4.enable="0"
     set .sip.auth.user.4.password="SIP_PASSWORD_LINE4"
     set .sip.auth.user.4.resource_priority="routine"
     set .sip.auth.user.4.sip_profile="1"
     set .sip.auth.user.4.subscriber="IF:0104"
     set .sip.auth.user.4.username="SIP_USERNAME_LINE4"
    cp .sip.auth.user.5
-    set .sip.auth.user.5.enable="1"
+    set .sip.auth.user.5.enable="0"
     set .sip.auth.user.5.password="SIP_PASSWORD_LINE5"
     set .sip.auth.user.5.resource_priority="routine"
     set .sip.auth.user.5.sip_profile="1"
     set .sip.auth.user.5.subscriber="IF:0105"
     set .sip.auth.user.5.username="SIP_USERNAME_LINE5"
    cp .sip.auth.user.6
-    set .sip.auth.user.6.enable="1"
+    set .sip.auth.user.6.enable="0"
     set .sip.auth.user.6.password="SIP_PASSWORD_LINE6"
     set .sip.auth.user.6.resource_priority="routine"
     set .sip.auth.user.6.sip_profile="1"
     set .sip.auth.user.6.subscriber="IF:0106"
     set .sip.auth.user.6.username="SIP_USERNAME_LINE6"
    cp .sip.auth.user.7
-    set .sip.auth.user.7.enable="1"
+    set .sip.auth.user.7.enable="0"
     set .sip.auth.user.7.password="SIP_PASSWORD_LINE7"
     set .sip.auth.user.7.resource_priority="routine"
     set .sip.auth.user.7.sip_profile="1"
     set .sip.auth.user.7.subscriber="IF:0107"
     set .sip.auth.user.7.username="SIP_USERNAME_LINE7"
    cp .sip.auth.user.8
-    set .sip.auth.user.8.enable="1"
+    set .sip.auth.user.8.enable="0"
     set .sip.auth.user.8.password="SIP_PASSWORD_LINE8"
     set .sip.auth.user.8.resource_priority="routine"
     set .sip.auth.user.8.sip_profile="1"
@@ -1702,7 +1698,7 @@
    set .sip.profile.2.dtmf_transport="rfc2833"
    set .sip.profile.2.from_header_host="reg_domain"
    set .sip.profile.2.from_header_userinfo="calling_party"
-   set .sip.profile.2.interface="9901"
+   set .sip.profile.2.interface="9902"
    set .sip.profile.2.max_inbound_calls="120"
    set .sip.profile.2.max_outbound_calls="120"
    set .sip.profile.2.name="Voice_Profile1_OOB"
@@ -1761,7 +1757,7 @@
    set .sip.profile.3.dtmf_transport="rfc2833"
    set .sip.profile.3.from_header_host="reg_domain"
    set .sip.profile.3.from_header_userinfo="calling_party"
-   set .sip.profile.3.interface="9901"
+   set .sip.profile.3.interface="9903"
    set .sip.profile.3.max_inbound_calls="120"
    set .sip.profile.3.max_outbound_calls="120"
    set .sip.profile.3.name="Data_Profile1_INBAND"
@@ -1820,7 +1816,7 @@
    set .sip.profile.4.dtmf_transport="rfc2833"
    set .sip.profile.4.from_header_host="reg_domain"
    set .sip.profile.4.from_header_userinfo="calling_party"
-   set .sip.profile.4.interface="9901"
+   set .sip.profile.4.interface="9904"
    set .sip.profile.4.max_inbound_calls="120"
    set .sip.profile.4.max_outbound_calls="120"
    set .sip.profile.4.name="Voice_Profile1_INBAND"
@@ -1872,56 +1868,56 @@
     set .sip.reg.user.1.auth_user_index="1"
     set .sip.reg.user.1.contact_suffix="NULL"
     set .sip.reg.user.1.dn="SIP_USERNAME_LINE1"
-    set .sip.reg.user.1.enable="1"
+    set .sip.reg.user.1.enable="0"
     set .sip.reg.user.1.sip_profile="1"
     set .sip.reg.user.1.username="SIP_USERNAME_LINE1"
    cp .sip.reg.user.2
     set .sip.reg.user.2.auth_user_index="2"
     set .sip.reg.user.2.contact_suffix="NULL"
     set .sip.reg.user.2.dn="SIP_USERNAME_LINE2"
-    set .sip.reg.user.2.enable="1"
+    set .sip.reg.user.2.enable="0"
     set .sip.reg.user.2.sip_profile="1"
     set .sip.reg.user.2.username="SIP_USERNAME_LINE2"
    cp .sip.reg.user.3
     set .sip.reg.user.3.auth_user_index="3"
     set .sip.reg.user.3.contact_suffix="NULL"
     set .sip.reg.user.3.dn="SIP_USERNAME_LINE3"
-    set .sip.reg.user.3.enable="1"
+    set .sip.reg.user.3.enable="0"
     set .sip.reg.user.3.sip_profile="1"
     set .sip.reg.user.3.username="SIP_USERNAME_LINE3"
    cp .sip.reg.user.4
     set .sip.reg.user.4.auth_user_index="4"
     set .sip.reg.user.4.contact_suffix="NULL"
     set .sip.reg.user.4.dn="SIP_USERNAME_LINE4"
-    set .sip.reg.user.4.enable="1"
+    set .sip.reg.user.4.enable="0"
     set .sip.reg.user.4.sip_profile="1"
     set .sip.reg.user.4.username="SIP_USERNAME_LINE4"
    cp .sip.reg.user.5
     set .sip.reg.user.5.auth_user_index="5"
     set .sip.reg.user.5.contact_suffix="NULL"
     set .sip.reg.user.5.dn="SIP_USERNAME_LINE5"
-    set .sip.reg.user.5.enable="1"
+    set .sip.reg.user.5.enable="0"
     set .sip.reg.user.5.sip_profile="1"
     set .sip.reg.user.5.username="SIP_USERNAME_LINE5"
    cp .sip.reg.user.6
     set .sip.reg.user.6.auth_user_index="6"
     set .sip.reg.user.6.contact_suffix="NULL"
     set .sip.reg.user.6.dn="SIP_USERNAME_LINE6"
-    set .sip.reg.user.6.enable="1"
+    set .sip.reg.user.6.enable="0"
     set .sip.reg.user.6.sip_profile="1"
     set .sip.reg.user.6.username="SIP_USERNAME_LINE6"
    cp .sip.reg.user.7
     set .sip.reg.user.7.auth_user_index="7"
     set .sip.reg.user.7.contact_suffix="NULL"
     set .sip.reg.user.7.dn="SIP_USERNAME_LINE7"
-    set .sip.reg.user.7.enable="1"
+    set .sip.reg.user.7.enable="0"
     set .sip.reg.user.7.sip_profile="1"
     set .sip.reg.user.7.username="SIP_USERNAME_LINE7"
    cp .sip.reg.user.8
     set .sip.reg.user.8.auth_user_index="8"
     set .sip.reg.user.8.contact_suffix="NULL"
     set .sip.reg.user.8.dn="SIP_USERNAME_LINE8"
-    set .sip.reg.user.8.enable="1"
+    set .sip.reg.user.8.enable="0"
     set .sip.reg.user.8.sip_profile="1"
     set .sip.reg.user.8.username="SIP_USERNAME_LINE8"
   set .sip.remote_admin.realm="default_realm"
@@ -2047,7 +2043,7 @@
     set .snmp.mib2.managers.2.support_snmpv3="1"
    cp .snmp.mib2.managers.3
     set .snmp.mib2.managers.3.community="private"
-    set .snmp.mib2.managers.3.ip="192.168.16.1"
+    set .snmp.mib2.managers.3.ip="192.10.1.1"
     set .snmp.mib2.managers.3.subnet="255.255.255.0"
     set .snmp.mib2.managers.3.support_snmpv2="0"
     set .snmp.mib2.managers.3.support_snmpv3="1"
@@ -2092,7 +2088,7 @@
  set .telnet.lan_profile="1"
  set .telnet.port="23"
  set .tftp.dhcp_if="1"
- set .tftp.ip="192.168.16.1"
+ set .tftp.ip="192.10.1.1"
  set .tftp.lan_profile="1"
  set .tftp.ping_test="0"
  set .tftp.port="69"

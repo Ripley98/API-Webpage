@@ -39,11 +39,11 @@ def config_template(Partitionid, Accountid, headers, usernames, passwords, sipPo
                 pass
             else:
                 if sipPort == 'SIP_4_Port_MTA':
-                    origninal = r'config\orig_config\VEGA_4P_TEMPLATE_CONFIG_JAN2022vF1.txt'
+                    origninal = r'config\orig_config\VEGA_4P_AV_DISABLED_USERS_TEMPLATE_CONFIG_SEP2022vF1.txt'
                 elif sipPort == 'SIP_8_Port_MTA':
-                    origninal = r'config\orig_config\VEGA_8P_AV_DISABLED_USERS_TEMPLATE_CONFIG_SEP2022vF1.txt'
+                    origninal = r'config\orig_config\VEGA_8P_AV_DISABLED_USERS_TEMPLATE_CONFIG_OCT2022vF1.txt'
                 elif sipPort == 'SIP_24_Port_MTA':
-                    origninal = r'config\orig_config\24PORT-VEGA3000G-config-05032022-USA-AV-TEMPLATE.txt'
+                    origninal = r'config\orig_config\24PORT-VEGA3000G-config-10042022-DISABLED-USERS-AV-TEMPLATE.txt'
 
                 newFileName = r'config\new_config\VEGA_'+sipPort+'_'+l["accountNumber"]+".txt"
                 shutil.copyfile(origninal,newFileName)

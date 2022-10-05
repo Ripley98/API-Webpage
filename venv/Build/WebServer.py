@@ -22,9 +22,10 @@ class apiInfo:
     Accountid = []
     accountName = []
     sipPort = ''
+    mac = ''
 
 
-def config_template(Partitionid, Accountid, headers, usernames, passwords, sipPort):
+def config_template(Partitionid, Accountid, headers, usernames, passwords, sipPort, mac):
     for prt in Partitionid:
         for act in Accountid:
             line = requests.get("https://api.alianza.com/v2/partition/"+prt+"/account/"+act,headers=headers)
@@ -45,8 +46,13 @@ def config_template(Partitionid, Accountid, headers, usernames, passwords, sipPo
                 elif sipPort == 'SIP_24_Port_MTA':
                     origninal = r'config\orig_config\24PORT-VEGA3000G-config-10042022-DISABLED-USERS-AV-TEMPLATE.txt'
 
-                newFileName = r'config\new_config\VEGA_'+sipPort+'_'+l["accountNumber"]+".txt"
+                newFileName = r'C:\Users\Public\Documents\FTP\\' +mac.upper()+ 'config.txt'
+                newScriptFile= r'C:\Users\Public\Documents\FTP\\'+mac.upper()+ 'script.txt'
+
+                baseScript = r'/config/orig_script/baseConfigScript.txt'
+
                 shutil.copyfile(origninal,newFileName)
+                shutil.copyfile(baseScript, newScriptFile)
                 countUsr = len(usernames)
                 for user in usernames:
                     if user == '':
@@ -151,6 +157,7 @@ def create_device(Partitionid, Accountid, headers, mac, sipPort):
                             passwords.append(sipPassword)
                             # generates password
                             mac=mac.replace(":","")
+                            apiInfo.mac = mac
                             # filter mac address if it has ":"
                             newDevicebody = {
                                       "id": "string",
@@ -302,7 +309,7 @@ def adddevice():
                 if error != []:
                     pass
                 else:
-                    newFileName = config_template(apiInfo.Partitionid, apiInfo.Accountid, apiInfo.headers, usernames, passwords, apiInfo.sipPort)
+                    newFileName = config_template(apiInfo.Partitionid, apiInfo.Accountid, apiInfo.headers, usernames, passwords, apiInfo.sipPort, apiInfo.mac)
                     step = 4
                     return send_file(newFileName, as_attachment=True)
                 if newFileName != '':

@@ -6985,3 +6985,14 @@ TypeError: string indices must be integers
 2022-09-20 15:26:00,504 127.0.0.1 - - [20/Sep/2022 15:26:00] "GET /registrationstatus HTTP/1.1" 200 -
 2022-09-20 15:26:00,576 127.0.0.1 - - [20/Sep/2022 15:26:00] "[36mGET /static/css/bttn.css HTTP/1.1[0m" 304 -
 2022-09-20 15:26:00,712 127.0.0.1 - - [20/Sep/2022 15:26:00] "GET /favicon.ico HTTP/1.1" 200 -
+2022-10-05 10:18:54,008  * Running on all addresses (0.0.0.0)
+   WARNING: This is a development server. Do not use it in a production deployment.
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.50.144:80 (Press CTRL+C to quit)
+2022-10-05 10:19:30,632 192.168.50.219 - - [05/Oct/2022 10:19:30] "GET / HTTP/1.1" 200 -
+2022-10-05 10:19:31,103 192.168.50.219 - - [05/Oct/2022 10:19:31] "GET /static/css/main.css HTTP/1.1" 200 -
+2022-10-05 10:19:31,518 192.168.50.219 - - [05/Oct/2022 10:19:31] "GET /favicon.ico HTTP/1.1" 200 -
+2022-10-05 10:48:18,777  * Running on all addresses (0.0.0.0)
+   WARNING: This is a development server. Do not use it in a production deployment.
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.50.144:80 (Press CTRL+C to quit)

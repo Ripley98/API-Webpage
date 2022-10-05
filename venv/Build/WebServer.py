@@ -112,7 +112,7 @@ def create_device(Partitionid, Accountid, headers, mac, sipPort):
             #print(u)
             logging.debug("Configure Device Users:" + str(u))
             if u == []:
-                error.append("No Users on Account")
+                error.append("No Users on Account: If Users Exist on Account Retry Command")
             for x in u:
                 callerID = x["callerIdConfig"]
                 cID = callerID["callerIdNumber"]
@@ -197,6 +197,8 @@ def create_device(Partitionid, Accountid, headers, mac, sipPort):
                                     #print(error)
                                 elif n['messages'] == ['NotPermitted']:
                                     return redirect(url_for('logout'))
+                                elif n['messages'] == ['InvalidLineNumber']:
+                                    pass
                                 else:
                                     error.append(n['messages'])
                             else:

@@ -49,7 +49,7 @@ def config_template(Partitionid, Accountid, headers, usernames, passwords, sipPo
                 newFileName = r'C:\Users\Public\Documents\FTP\\' +mac.upper()+ 'config.txt'
                 newScriptFile= r'C:\Users\Public\Documents\FTP\\'+mac.upper()+ 'script.txt'
 
-                baseScript = r'/config/orig_script/baseConfigScript.txt'
+                baseScript = r'C:\Users\Admin\PycharmProjects\API-Webpage\venv\Build\config\orig_script\baseConfigScript.txt'
 
                 shutil.copyfile(origninal,newFileName)
                 shutil.copyfile(baseScript, newScriptFile)
@@ -195,6 +195,8 @@ def create_device(Partitionid, Accountid, headers, mac, sipPort):
                                 elif n['messages'] == ['SipUsernameInUse']:
                                     error.append("Device has lines already")
                                     #print(error)
+                                elif n['messages'] == ['NotPermitted']:
+                                    return redirect(url_for('logout'))
                                 else:
                                     error.append(n['messages'])
                             else:
@@ -212,10 +214,7 @@ def sip_ports(port):
     error = []
     port = request.args.get('port')
     #print(port)
-    if port == '2':
-        sipPort = 'SIP_2_Port_MTA'
-        apiInfo.sipPort = 'SIP_2_Port_MTA'
-    elif port == '4':
+    if port == '4':
         sipPort = 'SIP_4_Port_MTA'
         apiInfo.sipPort = 'SIP_4_Port_MTA'
     elif port == '8':

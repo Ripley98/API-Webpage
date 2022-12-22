@@ -13,7 +13,7 @@
   <a href="/callhistory">Call History</a>
   <a href="/adddevice">Add Device</a>
     <a href="/addaccount">Add Account</a>
-  <a href="/adduser">Add User</a>
+    <a href="/adduser">Add User</a>
     <a href="/logs">Download Log</a>
     <a href="/logout">Log out</a>
 </div>
@@ -21,32 +21,26 @@
     <section class="sec-boxes" role="section">
         {% if step == 1 %}
       <form id="form">
-            <input type="search" id="query" name="q" placeholder="Search for Account to Add Device">
+            <input type="search" id="query" name="q" placeholder="Add Account: WF or Lumen Partition">
             <button>Search</button>
       </form>
         {% endif %}
 
         {% if step == 2 %}
         <form id="form">
-            <input type="search" id="query" name="port" placeholder="What port device: Multiple Devices seperate with comma">
+            <input type="search" id="query" name="actName" placeholder="Enter Acount Name">
             <button>Enter</button>
       </form>
-        <h1>{{accountName[0]}}</h1>
+        <h1>{{q}}</h1>
         {% endif %}
 
         {% if step == 3 %}
         <form id="form">
-            <input type="search" id="query" name="mac" placeholder="Enter Mac adress: Multiple Devices seperate with comma">
+            <input type="search" id="query" name="actNum" placeholder="Enter Account Number">
             <button>Enter</button>
       </form>
-        <h1>{{accountName[0]}}</h1>
-        <h2>{{sipPort}}</h2>
-        <h2>{{sipPort2}}</h2>
-        {% endif %}
-
-        {% if step == 4 %}
-        <h1>Successfully created file {{newFileName}}</h1>
-        <a href="{{ url_for('newFileName') }}">File</a>
+        <h1>{{q}}</h1>
+        <h2>{{actName}}</h2>
         {% endif %}
 
         {% if error %}

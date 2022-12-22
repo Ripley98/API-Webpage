@@ -15,10 +15,14 @@ app = Flask(__name__)
 #logging.basicConfig(filename="Logs\ProcessLog", level=logging.DEBUG,format="%(asctime)s %(message)s")
 #logging.basicConfig(filename="/home/pi/API-Webpage/venv/Build/Logs/ProcessLog", level=logging.DEBUG,format="%(asctime)s %(message)s")
 logger = logging.getLogger("Rotating Log")
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.ERROR)
 
 path="Logs\Process.log"
 handler = RotatingFileHandler(path, maxBytes=2000000,backupCount=5)
+
+formatter = logging.Formatter('%(asctime)s - %(message)s')
+handler.setFormatter(formatter)
+
 logger.addHandler(handler)
 
 class apiInfo:
@@ -48,7 +52,7 @@ def mult_config_template(Partitionid, Accountid, headers, usernames, passwords, 
             for deviceNum in total:
                 line = requests.get("https://api.alianza.com/v2/partition/" + prt + "/account/" + act, headers=headers)
                 l = json.loads(line.text)
-                logger.debug("Configure Multi Template:" + str(l))
+                logger.error("Configure Multi Template:" + str(l))
                 # print("3:")
                 # print(l)
                 if line.status_code == 401:
@@ -159,7 +163,7 @@ def mult_config_template(Partitionid, Accountid, headers, usernames, passwords, 
                         with open(newFileName, 'w') as file:
                             file.write(data)
                         countPwd = countPwd - 1
-                    logger.debug("Created config file at " + str(newFileName))
+                    logger.error("Created config file at " + str(newFileName))
                     if deviceNum == 1:
                         File1 = newFileName
                     elif deviceNum == 2:
@@ -178,7 +182,7 @@ def config_template(Partitionid, Accountid, headers, usernames, passwords, sipPo
         for act in Accountid:
             line = requests.get("https://api.alianza.com/v2/partition/" + prt + "/account/" + act, headers=headers)
             l = json.loads(line.text)
-            logger.debug("Configure Template:" + str(l))
+            logger.error("Configure Template:" + str(l))
             # print("3:")
             # print(l)
             if line.status_code == 401:
@@ -256,7 +260,7 @@ def config_template(Partitionid, Accountid, headers, usernames, passwords, sipPo
                     with open(newFileName, 'w') as file:
                         file.write(data)
                     countPwd = countPwd - 1
-                logger.debug("Created config file at " + str(newFileName))
+                logger.error("Created config file at " + str(newFileName))
                 return newFileName
 
 
@@ -284,10 +288,10 @@ def create_mult_device(Partitionid, Accountid, headers, mac, sipPort, sipPort2):
                 #print(userID)
                 #print(userID.text)
                 #print(u)
-                logger.debug("Configure Device Users:" + str(u))
+                logger.error("Configure Device Users:" + str(u))
                 ifAccountinPartition = requests.get("https://api.alianza.com/v2/partition/" + prt + "/account/" + act,headers=headers)
                 i = json.loads(ifAccountinPartition.text)
-                logger.debug("Check if account in partition:" + str(i))
+                logger.error("Check if account in partition:" + str(i))
                 if ifAccountinPartition.status_code == 404:
                     pass
                 else:
@@ -372,12 +376,12 @@ def create_mult_device(Partitionid, Accountid, headers, mac, sipPort, sipPort2):
                                           "lineType": "Line",
                                           "referenceId": None
                                         }
-                                logger.debug("New Device Body:" + str(newDevicebody))
+                                logger.error("New Device Body:" + str(newDevicebody))
                                 newDevice = requests.post("https://api.alianza.com/v2/partition/"+prt+"/account/"+act+"/deviceline",headers=headers, json=newDevicebody)
                                 n = json.loads(newDevice.text)
                                 #print("7:")
                                 #print(n)
-                                logger.debug("Create Device:" + str(n))
+                                logger.error("Create Device:" + str(n))
                                 if newDevice.status_code == 401:
                                     if n["messages"] == 'ExpiredAuthToken':
                                         return redirect(url_for('logout'))
@@ -401,7 +405,7 @@ def create_mult_device(Partitionid, Accountid, headers, mac, sipPort, sipPort2):
                                     y.remove(y[0])
     usernames.reverse()
     passwords.reverse()
-    logger.debug("New Device Credentials:" + str(usernames) + str(passwords))
+    logger.error("New Device Credentials:" + str(usernames) + str(passwords))
     #print(usernames)
     #print(passwords)
     return(usernames,passwords,error)
@@ -420,11 +424,11 @@ def create_device(Partitionid, Accountid, headers, mac, sipPort):
             # print(userID)
             # print(userID.text)
             # print(u)
-            logger.debug("Configure Device Users:" + str(u))
+            logger.error("Configure Device Users:" + str(u))
             ifAccountinPartition = requests.get("https://api.alianza.com/v2/partition/" + prt + "/account/" + act,
                                                 headers=headers)
             i = json.loads(ifAccountinPartition.text)
-            logger.debug("Check if account in partition:" + str(i))
+            logger.error("Check if account in partition:" + str(i))
             if ifAccountinPartition.status_code == 404:
                 pass
             else:
@@ -497,14 +501,14 @@ def create_device(Partitionid, Accountid, headers, mac, sipPort):
                                 "lineType": "Line",
                                 "referenceId": None
                             }
-                            logger.debug("New Device Body:" + str(newDevicebody))
+                            logger.error("New Device Body:" + str(newDevicebody))
                             newDevice = requests.post(
                                 "https://api.alianza.com/v2/partition/" + prt + "/account/" + act + "/deviceline",
                                 headers=headers, json=newDevicebody)
                             # print("2:")
                             # print(newDevice)
                             n = json.loads(newDevice.text)
-                            logger.debug("Create Device:" + str(n))
+                            logger.error("Create Device:" + str(n))
                             if newDevice.status_code == 401:
                                 if n["messages"] == 'ExpiredAuthToken':
                                     return redirect(url_for('logout'))
@@ -529,7 +533,7 @@ def create_device(Partitionid, Accountid, headers, mac, sipPort):
                 passwords.reverse()
                 # print(usernames)
                 # print(passwords)
-                logger.debug("New Device Credentials:" + str(usernames) + str(passwords))
+                logger.error("New Device Credentials:" + str(usernames) + str(passwords))
     return (usernames, passwords, error)
 
 
@@ -592,7 +596,7 @@ def search_account(Partitionid, headers, error, Accountid):
         q = request.args.get('q')
         search = requests.get("https://api.alianza.com/v2/partition/" + prt + "/account/search?q=" + q, headers=headers)
         actInfo = json.loads(search.text)
-        logger.debug("Default search:" + str(actInfo))
+        logger.error("Default search:" + str(actInfo))
         if search.status_code == 401:
             if actInfo["messages"] == 'ExpiredAuthToken':
                 return redirect(url_for('logout'))
@@ -749,7 +753,7 @@ def adduser():
                         }
                     create = requests.post("https://api.alianza.com/v2/partition/"+prt+"/account/"+act+"/user", headers=headers,json=user)
                     x = json.loads(create.text)
-                    logger.debug("New Account:" + str(x))
+                    logger.error("New Account:" + str(x))
                     if create.status_code == 400:
                         error.append(x['messages'])
                     step = 1
@@ -840,7 +844,7 @@ def addaccount():
                 create = requests.post("https://api.alianza.com/v2/partition/" + prt + "/account", headers=headers,
                                        json=account)
                 x = json.loads(create.text)
-                logger.debug("New Account:" + str(x))
+                logger.error("New Account:" + str(x))
                 if create.status_code == 400:
                     error.append(x['messages'])
                 step = 1
@@ -964,7 +968,7 @@ def callhistory():
                 search = requests.get("https://api.alianza.com/v2/partition/" + prt + "/account/search?q=" + q,
                                       headers=headers)
                 actInfo = json.loads(search.text)
-                logger.debug("Call History Search:" + str(actInfo))
+                logger.error("Call History Search:" + str(actInfo))
                 if search.status_code == 401:
                     if actInfo["messages"] == 'ExpiredAuthToken':
                         return redirect(url_for('logout'))
@@ -991,7 +995,7 @@ def callhistory():
         for prt in Partitionid:
             partition = requests.get("https://api.alianza.com/v2/partition/" + prt, headers=headers)
             p = json.loads(partition.text)
-            logger.debug("Call History Partition Name:" + str(p))
+            logger.error("Call History Partition Name:" + str(p))
             if partition.status_code == 401:
                 if p["messages"] == 'ExpiredAuthToken':
                     return redirect(url_for('logout'))
@@ -1000,7 +1004,7 @@ def callhistory():
                 account = requests.get("https://api.alianza.com/v2/partition/" + prt + "/account/" + act,
                                        headers=headers)
                 a = json.loads(account.text)
-                logger.debug("Call History Account Name:" + str(a))
+                logger.error("Call History Account Name:" + str(a))
                 if account.status_code == 401:
                     if a["messages"] == 'ExpiredAuthToken':
                         return redirect(url_for('logout'))
@@ -1013,7 +1017,7 @@ def callhistory():
                         "https://api.alianza.com/v2/partition/" + prt + "/account/" + act + "/cdrsearch?startDate=" + startDatestr + "&endDate=" + endDatestr + "&maxResult=10&sort=DATE&sortOrder=DESC",
                         headers=headers)
                     h = json.loads(history.text)
-                    logger.debug("Call History:" + str(h))
+                    logger.error("Call History:" + str(h))
                     if history.status_code == 401:
                         if h["messages"] == 'ExpiredAuthToken':
                             return redirect(url_for('logout'))
@@ -1090,7 +1094,7 @@ def registered():
                                       headers=headers)
                 # print(search)
                 actInfo = json.loads(search.text)
-                logger.debug("Registered Account Search:" + str(actInfo))
+                logger.error("Registered Account Search:" + str(actInfo))
                 if search.status_code == 401:
                     if actInfo["messages"] == 'ExpiredAuthToken':
                         return redirect(url_for('logout'))
@@ -1110,7 +1114,7 @@ def registered():
         for prt in Partitionid:
             partition = requests.get("https://api.alianza.com/v2/partition/" + prt, headers=headers)
             p = json.loads(partition.text)
-            logger.debug("Registered Partition Name:" + str(p))
+            logger.error("Registered Partition Name:" + str(p))
             if partition.status_code == 401:
                 if p["messages"] == 'ExpiredAuthToken':
                     return redirect(url_for('logout'))
@@ -1119,7 +1123,7 @@ def registered():
                 account = requests.get("https://api.alianza.com/v2/partition/" + prt + "/account/" + act,
                                        headers=headers)
                 a = json.loads(account.text)
-                logger.debug("Registered Account Name:" + str(a))
+                logger.error("Registered Account Name:" + str(a))
                 if account.status_code == 401:
                     if a["messages"] == 'ExpiredAuthToken':
                         return redirect(url_for('logout'))
@@ -1132,7 +1136,7 @@ def registered():
                         "https://api.alianza.com/v2/partition/" + prt + "/account/" + act + "/deviceline",
                         headers=headers)
                     y = json.loads(BusinessLines.text)
-                    logger.debug("Device Lines:" + str(y))
+                    logger.error("Device Lines:" + str(y))
                     if BusinessLines.status_code == 401:
                         if y["messages"] == 'ExpiredAuthToken':
                             return redirect(url_for('logout'))
@@ -1146,7 +1150,7 @@ def registered():
                             "https://api.alianza.com/v2/partition/" + prt + "/account/" + act + "/deviceline/" + ids + "/registrationstatus",
                             headers=headers)
                         z = json.loads(registered.text)
-                        logger.debug("Line is Registered:" + str(z))
+                        logger.error("Line is Registered:" + str(z))
                         if registered.status_code == 401:
                             if z["messages"] == 'ExpiredAuthToken':
                                 return redirect(url_for('logout'))
@@ -1167,13 +1171,13 @@ def registered():
 
 @app.route('/logs', methods=['GET', 'POST'])
 def logs():
-    logger.debug("Download Log")
+    logger.error("Download Log")
     return send_file(r'home/pi/API-Webpage/venv/Build/Logs/Process.log', as_attachment=True)
 
 
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
-    logger.debug("Logout:" + apiInfo.headers['X-AUTH-TOKEN'])
+    logger.error("Logout:" + apiInfo.headers['X-AUTH-TOKEN'])
     apiInfo.headers['X-AUTH-TOKEN'] = ''
     return redirect(url_for('login'))
 
@@ -1186,7 +1190,7 @@ def login():
         query = {"username": request.form['username'], "password": request.form['password']}
         response = requests.post("https://api.alianza.com/v2/authorize", json=query)
         x = json.loads(response.text)
-        logger.debug("Login:" + str(x))
+        logger.error("Login:" + str(x))
         if response.status_code == 201:
             apiInfo.headers['X-AUTH-TOKEN'] = x["authToken"]
             return redirect(url_for('registered'))
@@ -1202,5 +1206,5 @@ def hello(name):
 
 if __name__ == "__main__":
     # app.debug = True
-    app.run(host="0.0.0.0", port=80)
-    #app.run()
+    #app.run(host="0.0.0.0", port=80)
+    app.run()

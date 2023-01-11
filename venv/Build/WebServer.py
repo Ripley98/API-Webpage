@@ -19,7 +19,7 @@ logger = logging.getLogger("Rotating Log")
 logger.setLevel(logging.ERROR)
 
 #path="Logs\Process.log"
-path="/home/pi/API-Webpage/venv/Build/Logs"
+path="/home/pi/API-Webpage/venv/Build/Logs/Process.log"
 handler = RotatingFileHandler(path, maxBytes=2000000,backupCount=5)
 
 formatter = logging.Formatter('%(asctime)s - %(message)s')

@@ -18,7 +18,8 @@ app = Flask(__name__)
 logger = logging.getLogger("Rotating Log")
 logger.setLevel(logging.ERROR)
 
-path="Logs\Process.log"
+#path="Logs\Process.log"
+path="/home/pi/API-Webpage/venv/Build/Logs"
 handler = RotatingFileHandler(path, maxBytes=2000000,backupCount=5)
 
 formatter = logging.Formatter('%(asctime)s - %(message)s')
@@ -1207,5 +1208,5 @@ def hello(name):
 
 if __name__ == "__main__":
     # app.debug = True
-    #app.run(host="0.0.0.0", port=80)
-    app.run()
+    app.run(host="0.0.0.0", port=80)
+    #app.run()
